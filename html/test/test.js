@@ -1,9 +1,10 @@
 function outsideTheContinent(){
     let result=[];
     let compteur;
-    Country.all_countrie.forEach(pays1 => {
-        
+    
+    Object.values(Country.all_countrie).forEach(pays1 => {
         compteur=0
+        console.log(pays1)
         pays1.getBorders().forEach(pays2 => {
             console.log(pays2)
             if(pays1.region!=pays2.region&&compteur==0){
@@ -17,6 +18,18 @@ function outsideTheContinent(){
 }
 
 function moreNeighbors(){
+    
+}
+
+function moreLanguages(){
+
+}
+
+function withoutCommonCurrency(){
+
+}
+
+function moreTopLevelDomains(){
 
 }
 

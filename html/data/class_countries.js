@@ -60,13 +60,15 @@ class Country {
         countries.forEach(element => {
             if(element["name"]==this.nom){
                 element["languages"].forEach(element => {
-                    resultat[element.iso639_2]=Currency.all_currencies[element.iso639_2]
+                    resultat[element.iso639_2]=Language.all_languages[element.iso639_2]
                 });
                 
             }
         });
         return resultat
     }
+
+    
 }
 Country.fill_countries()
 console.table(Country.all_countrie["FRA"].getCurrencies());
