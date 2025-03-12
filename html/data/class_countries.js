@@ -22,7 +22,13 @@ class Country {
     }
 
     getPopDensity(){
-
+        let resultat=0
+        countries.forEach(element => {
+            if(element["name"]==this.nom){
+                resultat=element["population"]/element["area"]
+            }
+        });
+        return resultat;
     }
 
     getBorders(){
@@ -32,7 +38,7 @@ class Country {
                 resultat[element]=Country.all_countrie[element]
             });
         }else{
-            resultat=null
+            resultat="pas d'amis ahahah"
         }
         return resultat
     }
@@ -50,8 +56,20 @@ class Country {
     }
 
     getLanguages(){
-        
+        let resultat=[]
+        countries.forEach(element => {
+            if(element["name"]==this.nom){
+                element["languages"].forEach(element => {
+                    resultat[element.iso639_2]=Currency.all_currencies[element.iso639_2]
+                });
+                
+            }
+        });
+        return resultat
     }
 }
 Country.fill_countries()
-console.table(Country.all_countrie["AFG"].getCurrencies());
+console.table(Country.all_countrie["FRA"].getCurrencies());
+console.table(Country.all_countrie["FRA"].getLanguages());
+console.table(Country.all_countrie["FRA"].getBorders());
+console.table(Country.all_countrie["FRA"].getPopDensity());
