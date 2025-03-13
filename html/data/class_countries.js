@@ -24,7 +24,7 @@ class Country {
     getPopDensity(){
         let resultat=0
         countries.forEach(element => {
-            if(element["name"]==this.nom){
+            if(element["alpha3Code"]==this.alpha3){
                 resultat=element["population"]/element["area"]
             }
         });
@@ -38,14 +38,14 @@ class Country {
                 resultat[element]=Country.all_countrie[element]
             });
         }else{
-            resultat="pas d'amis ahahah"
+            return 0
         }
         return resultat
     }
     getCurrencies(){
         let resultat=[]
         countries.forEach(element => {
-            if(element["name"]==this.nom){
+            if(element["alpha3Code"]==this.alpha3){
                 element["currencies"].forEach(element => {
                     resultat[element.code]=Currency.all_currencies[element.code]
                 });
@@ -58,9 +58,13 @@ class Country {
     getLanguages(){
         let resultat=[]
         countries.forEach(element => {
-            if(element["name"]==this.nom){
+            if(element["alpha3Code"]==this.alpha3){
                 element["languages"].forEach(element => {
-                    resultat[element.iso639_2]=Language.all_languages[element.iso639_2]
+                    if(Language.all_languages[element.iso639_2]){
+
+                    
+                        resultat[element.iso639_2]=Language.all_languages[element.iso639_2]
+                    }
                 });
                 
             }
