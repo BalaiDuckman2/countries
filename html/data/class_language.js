@@ -22,4 +22,4 @@ class Language{
 }
 
 Language.fill_languages();
-console.table(Language.all_languages)
+//console.table(Language.all_languages)
