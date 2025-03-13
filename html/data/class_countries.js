@@ -38,7 +38,7 @@ class Country {
                 resultat[element]=Country.all_countrie[element]
             });
         }else{
-            return 0
+            return 0;
         }
         return resultat
     }
