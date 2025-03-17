@@ -71,18 +71,22 @@ function sortingDecreasingDensity(){
     let countriesWithDensity = [];
 
     for (let countryCode in Country.all_countrie) {
-        
         const country = Country.all_countrie[countryCode];
         const population = country.population;
-        const area = country.area;
-
-        if (population && area) {
-            const density = population / area;
-            countriesWithDensity.push({
-                country: country.nom,
-                density: density
-            });
-        }
+           
+            const density = country.getPopDensity(); 
+            if( !isNaN(density) ){
+                countriesWithDensity.push({
+                    country: country.nom,
+                    density: density
+                });
+            }else {
+                countriesWithDensity.push({
+                    country: country.nom,
+                    density: 0
+                });
+            }
+        
     }
 
     countriesWithDensity.sort((a, b) => b.density - a.density);

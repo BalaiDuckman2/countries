@@ -18,7 +18,7 @@ class Country {
 
     
     toString() {
-        return `${this.alpha3}, ${this.nom}, ${this.capitale}, ${this.continent}, ${this.population} hab})`;
+        return `${this.alpha3}, ${this.nom}, ${this.capitale}, ${this.continent}, ${this.population} hab`;
     }
 
     static fill_countries(){
