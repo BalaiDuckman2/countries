@@ -12,7 +12,7 @@ class Country {
 
     
     toString() {
-        return `${this.alpha3}, ${this.nom}, ${this.capitale}, ${this.continent}, ${this.population} hab, (${this.paysVoisin.join(", ")})`;
+        return `${this.alpha3}, ${this.nom}, ${this.capitale}, ${this.continent}, ${this.population} hab`;
     }
 
     static fill_countries(){
