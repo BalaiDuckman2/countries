@@ -1,37 +1,76 @@
 let debut = 0;
-let fin = 25;
+const perPage = 25;
+let fin = perPage;
+let countr = Object.values(Country.all_countrie);
+
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+    console.log("Cookie défini:", document.cookie); 
+}
+
+function getCookie(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+let savedPage = getCookie("currentPage");
+if (savedPage !== null && !isNaN(parseInt(savedPage))) {
+    debut = parseInt(savedPage) * perPage;
+    fin = debut + perPage;
+    console.log("Page chargée depuis le cookie:", savedPage);
+} else {
+    console.log("Aucun cookie trouvé, début à 0"); 
+}
 
 function displayCountries() {
-    let start = debut;
-    let end = fin;
-    const pageCountries = Country.all_countrie;
+    let tableBody = $("#country-list");
+    tableBody.empty();
+    let paginatedCountries = countri.slice(debut, fin);
 
-
-    $("table tbody").empty();
-
-    for (let i = start; i < end && i < pageCountries.length; i++) {
-        let element = pageCountries[i];
-        let colonne = $("tr").last().after("<tr></tr>");
-        $("tr").last().append("<td>" + element.nom + "</td>");
-        $("tr").last().append("<td>" + element.population + "</td>");
-        $("tr").last().append("<td>" + element.superficie + "</td>");
-        $("tr").last().append("<td>" + element.getPopDensity() + "</td>");
-        $("tr").last().append("<td>" + element.continent + "</td>");
-        $("tr").last().append("<td><img src=" + element.drapeau + "></td>");
-    }
-
+    paginatedCountries.forEach(element => {
+        let row = `<tr>
+            <td>${element.nom}</td>
+            <td>${element.population}</td>
+            <td>${element.superficie}</td>
+            <td>${element.getPopDensity()}</td>
+            <td>${element.continent}</td>
+            <td><img src="${element.drapeau}" alt="Drapeau"></td>
+        </tr>`;
+        tableBody.append(row);
+    });
+    let currentPage = Math.floor(debut / perPage) + 1;
+    $("#page-number").text(currentPage);
 }
 
-function NextbuttonPage() {
-    debut = debut + 25;
-    fin = fin + 25;
-    displayCountries(Object.values(Country.all_countrie));
-}
+$(document).ready(function () {
+    displayCountries();
 
-function PrevbuttonPage() {
-    debut = debut - 25;
-    fin = fin - 25;
-    displayCountries(Object.values(Country.all_countrie));
-}
+    $("#next-button").click(function () {
+        if (fin < countri.length) {
+            debut += perPage;
+            fin += perPage;
+            setCookie("currentPage", Math.floor(debut / perPage), 7); 
+            displayCountries();
+        }
+    });
 
-displayCountries(Object.values(Country.all_countrie));
+    $("#prev-button").click(function () {
+        if (debut > 0) {
+            debut -= perPage;
+            fin -= perPage;
+            setCookie("currentPage", Math.floor(debut / perPage), 7); 
+            displayCountries();
+        }
+    });
+});
