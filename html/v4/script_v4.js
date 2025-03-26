@@ -1,70 +1,78 @@
 //v4 filtrage
 let langue = [];
-Object.values(Language.all_languages).map(element => {
-    langue.push(element._name);
+Object.values(Language.all_languages).map((element) => {
+langue.push({ name: element._name, iso: element._iso });
+});
 
-}
-);
 let continents = [];
-Object.values(Country.all_countrie).map(element => {
-    if (!continents.includes(element.continent)) {
-        continents.push(element.continent);
-    }
+Object.values(Country.all_countrie).map((element) => {
+  if (!continents.includes(element.continent)) {
+    continents.push(element.continent);
+  }
 });
 
 //creation des filtres
 $("table").last().before("<select id='continent'></select>");
 $("#continent").append("<option value=''>--Choisir un continent--</option>");
-continents.map(element => {
-    $("#continent").append("<option value='" + element + "'>" + element + "</option>");
-}
-);
+continents.map((element) => {
+  $("#continent").append(
+    "<option value='" + element + "'>" + element + "</option>"
+  );
+});
 
 $("table").last().before("<select id='langue'></select>");
 $("#langue").append("<option value=''>--Choisir une langue--</option>");
-langue.map(element => {
-    $("#langue").append("<option value='" + element + "'>" + element + "</option>");
-}
-);
+langue.map((element) => {
+  $("#langue").append(
+    "<option value='" + element.iso + "'>" + element.name + "</option>"
+  );
+});
 
-$("table").last().before("<input type='text' id='search' placeholder='Rechercher un pays'></input>");
-$("#search").on("keyup", function() {
-    let search = $(this).val().toLowerCase();
-    $("tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(search) > -1);
-    });
-}
-);
+$("table")
+  .last()
+  .before(
+    "<input type='text' id='search' placeholder='Rechercher un pays'></input>"
+  );
 
-//filtrage
-$("#continent").on("change", function() {
-    let continent = $(this).val();
-    if (continent === "") {
-        $("tr").show();
-    } else {
-        $("tr").hide();
-        $("tr").first().show();
-        $("tr").filter(function() {
-            return $(this).find("td").eq(4).text() === continent;
-        }).show();
-    }
+// filtrage
+function applyFilters() {
+  let continent = $("#continent").val();
+  let langue = $("#langue").val();
+  console.log(langue);
+  let search = $("#search").val().toLowerCase();
+    
+  $("tr").hide();
+  $("tr").first().show();
+  $("tr")
+    .filter(function () {
+      let filtre = true;
+      if (continent !== "") {
+        filtre = filtre && $(this).find("td").eq(4).text() === continent;
+      }
+      if (langue !== "") {
+        let alpha3 = $(this).find("td").eq(6).text();
+        if (alpha3 !== "") {
+          filtre =
+            filtre &&
+            Country.all_countrie[alpha3].languages.some(
+              (element) => element.iso639_2 == langue
+            );
+        } else {
+          filtre = false;
+        }
+      }
+      if (search !== "") {
+        filtre = filtre && $(this).text().toLowerCase().indexOf(search) > -1;
+      }
+      return filtre;
+    })
+    .show();
 }
-);
 
-$("#langue").on("change", function() {
-    let langue = $(this).val();
-    if (langue === "") {
-        $("tr").show();
-    } else {
-        $("tr").hide();
-        $("tr").first().show();
-        $("tr").filter(function() {
-                
-            return $(this).find("td").eq(4).text() == langue;
-        }).show();
-    }
-}
-);
+$("#continent").on("change", applyFilters);
+$("#langue").on("change", applyFilters);
+$("#search").on("keyup", applyFilters);
+
 
 
 Object.values(Country.all_countrie).map(element => {
