@@ -1,7 +1,7 @@
-let debut = 0;
+let debut2 = 0;
 const perPage = 25;
-let fin = perPage;
-let countr = Object.values(Country.all_countrie);
+let fin2 = perPage;
+let countri = Object.values(Country.all_countrie);
 
 function setCookie(name, value, days) {
     let expires = "";
@@ -11,7 +11,7 @@ function setCookie(name, value, days) {
         expires = "; expires=" + date.toUTCString();
     }
     document.cookie = name + "=" + value + expires + "; path=/";
-    console.log("Cookie défini:", document.cookie); 
+    console.log("Cookie défin2i:", document.cookie); 
 }
 
 function getCookie(name) {
@@ -26,8 +26,8 @@ function getCookie(name) {
 
 let savedPage = getCookie("currentPage");
 if (savedPage !== null && !isNaN(parseInt(savedPage))) {
-    debut = parseInt(savedPage) * perPage;
-    fin = debut + perPage;
+    debut2 = parseInt(savedPage) * perPage;
+    fin2 = debut2 + perPage;
     console.log("Page chargée depuis le cookie:", savedPage);
 } else {
     console.log("Aucun cookie trouvé, début à 0"); 
@@ -36,7 +36,7 @@ if (savedPage !== null && !isNaN(parseInt(savedPage))) {
 function displayCountries() {
     let tableBody = $("#country-list");
     tableBody.empty();
-    let paginatedCountries = countri.slice(debut, fin);
+    let paginatedCountries = countri.slice(debut2, fin2);
 
     paginatedCountries.forEach(element => {
         let row = `<tr>
@@ -49,7 +49,7 @@ function displayCountries() {
         </tr>`;
         tableBody.append(row);
     });
-    let currentPage = Math.floor(debut / perPage) + 1;
+    let currentPage = Math.floor(debut2 / perPage) + 1;
     $("#page-number").text(currentPage);
 }
 
@@ -57,19 +57,19 @@ $(document).ready(function () {
     displayCountries();
 
     $("#next-button").click(function () {
-        if (fin < countri.length) {
-            debut += perPage;
-            fin += perPage;
-            setCookie("currentPage", Math.floor(debut / perPage), 7); 
+        if (fin2 < countri.length) {
+            debut2 += perPage;
+            fin2 += perPage;
+            setCookie("currentPage", Math.floor(debut2 / perPage), 7); 
             displayCountries();
         }
     });
 
     $("#prev-button").click(function () {
-        if (debut > 0) {
-            debut -= perPage;
-            fin -= perPage;
-            setCookie("currentPage", Math.floor(debut / perPage), 7); 
+        if (debut2 > 0) {
+            debut2 -= perPage;
+            fin2 -= perPage;
+            setCookie("currentPage", Math.floor(debut2 / perPage), 7); 
             displayCountries();
         }
     });
