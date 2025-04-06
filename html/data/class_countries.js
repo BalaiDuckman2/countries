@@ -23,7 +23,7 @@ class Country {
 
     static fill_countries(){
         countries.forEach(tout => {
-            this.all_countrie[tout["alpha3Code"]]=new Country(tout["alpha3Code"],tout["translations"]["fr"],tout["capital"],tout["region"],tout["population"],tout["borders"],tout["flag"],tout["topLevelDomain"],tout["area"],tout["languages"],tout["currencies"])
+            this.all_countrie[tout["alpha3Code"]]=new Country(tout["alpha3Code"],tout["translations"]["fr"],tout["capital"],tout["region"],tout["population"],tout["borders"]   ,tout["flag"],tout["topLevelDomain"],tout["area"],tout["languages"],tout["currencies"])
         });
     }
 
@@ -44,6 +44,7 @@ class Country {
         }
         return resultat
     }
+
     getCurrencies(){
         let resultat=[]
         this.currencies.forEach(element => {
@@ -56,7 +57,7 @@ class Country {
     getLanguages(){
         let resultat=[]
         this.languages.forEach(element => {
-            resultat[element.iso639_1]=Language.all_languages[element.iso639_1]
+            resultat[element.iso639_2]=Language.all_languages[element.iso639_2]
         });
         return resultat
     }
