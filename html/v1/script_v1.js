@@ -1,5 +1,6 @@
+//Affiche le tableau des pays
 Object.values(Country.all_countrie).map(element => {
-    let colonne = $("tr").last().after("<tr></tr>");
+    $("tr").last().after("<tr></tr>");
     $("tr").last().append("<td>" + element.nom + "</td>");
     $("tr").last().append("<td>" + element.population + "</td>");
     $("tr").last().append("<td>" + element.superficie + "</td>");

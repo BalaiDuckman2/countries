@@ -3,6 +3,7 @@ const perPage = 25;
 let fin2 = perPage;
 let countri = Object.values(Country.all_countrie);
 
+//Cookie pour la pagination
 function setCookie(name, value, days) {
     let expires = "";
     if (days) {
@@ -33,6 +34,7 @@ if (savedPage !== null && !isNaN(parseInt(savedPage))) {
     console.log("Aucun cookie trouvé, début à 0"); 
 }
 
+//Affiche le tableau des pays
 function displayCountries() {
     let tableBody = $("#country-list");
     tableBody.empty();
@@ -55,7 +57,7 @@ function displayCountries() {
 
 $(document).ready(function () {
     displayCountries();
-
+    //Pagination
     $("#next-button").click(function () {
         if (fin2 < countri.length) {
             debut2 += perPage;

@@ -3,6 +3,7 @@ const perPage = 25;
 let fin2 = perPage;
 let countri = Object.values(Country.all_countrie);
 
+//Cookie pour la pagination
 function setCookie(name, value, days) {
   let expires = "";
   if (days) {
@@ -33,6 +34,7 @@ if (savedPage !== null && !isNaN(parseInt(savedPage))) {
   console.log("Aucun cookie trouvé, début à 0");
 }
 
+//Affiche le tableau des pays
 function displayCountries() {
   let tableBody = $("#country-list");
   tableBody.empty();
@@ -56,15 +58,13 @@ function displayCountries() {
 }
 
 function resetEventListeners() {
-  $("tr")
-    .off("click")
+  $("tr:not(:first)")
     .on("click", function () {
       let alpha3 = $(this).find("td").last().text();
       info(alpha3);
     });
 
   $("img")
-    .off("click")
     .on("click", function (event) {
       event.stopPropagation();
       let drapeau = $(this).attr("src");
@@ -75,8 +75,10 @@ function resetEventListeners() {
 $(document).ready(function () {
   displayCountries();
   resetEventListeners();
-
+  //Pagination
   $("#next-button").click(function () {
+    $("#image").remove();
+    $("#info").remove();
     if (fin2 < countri.length) {
       debut2 += perPage;
       fin2 += perPage;
@@ -87,6 +89,8 @@ $(document).ready(function () {
   });
 
   $("#prev-button").click(function () {
+    $("#image").remove();
+    $("#info").remove();
     if (debut2 > 0) {
       debut2 -= perPage;
       fin2 -= perPage;
@@ -95,12 +99,12 @@ $(document).ready(function () {
       resetEventListeners();
     }
   });
-
-  $("tr").on("click", function () {
+  //Information sur le pays
+  $("tr:not(:first)").on("click", function () {
     let alpha3 = $(this).find("td").last().text();
     info(alpha3);
   });
-
+  //Drapeau du pays
   $("img").on("click", function () {
     event.stopPropagation();
     let drapeau = $(this).attr("src");
@@ -109,6 +113,7 @@ $(document).ready(function () {
   });
 });
 
+//fonction des informations sur le pays
 function info(alpha3) {
   $("#image").remove();
   let country = Country.all_countrie[alpha3];
@@ -140,8 +145,15 @@ function info(alpha3) {
   $("#fermer").on("click", function () {
     $("#info").remove();
   });
+
+  $(document).on("keydown", function (event) {
+    if (event.key === "Escape") {
+      $("#info").remove();
+    }
+  });
 }
 
+//fonction pour agrandir le drapeau
 function imageGrand(drapeau) {
   $("#info").remove();
   let imageDiv = $("#image");
@@ -156,5 +168,11 @@ function imageGrand(drapeau) {
 
   $("#fermer2").on("click", function () {
     $("#image").remove();
+  });
+
+    $(document).on("keydown", function (event) {
+    if (event.key === "Escape") {
+      $("#image").remove();
+    }
   });
 }

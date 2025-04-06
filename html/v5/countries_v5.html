@@ -1,24 +1,9 @@
-
 <script type="text/javascript" src="../data/countries.js"></script>
 <script type="text/javascript" src="../data/class_currency.js"></script>
 <script type="text/javascript" src="../data/class_language.js"></script>
 <script type="text/javascript" src="../data/class_countries.js"></script>
 
 </script>
-<table>
-    <thead>
-        <tr>
-            <th>Nom en français</th>
-            <th>Population</th>
-            <th>Surface</th>
-            <th>Densité de population</th>
-            <th>Continent d’appartenance</th>
-            <th>Drapeau</th>
-        </tr>
-    </thead>
-
-</table>
-
 <style>
     table {
         width: 100%;
@@ -34,15 +19,43 @@
     th {
         background-color: #f2f2f2;
     }
-
-
-
-
     img {
         width: 100px;
         height: auto;
     }
+    #pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    th, td {
+        width: 200px;
+        height: 50px;
+        word-wrap: break-word;
+    }
 </style>
+<body>
+    <h1>Liste des Pays</h1>
+    <p>Page: <span id="page-number">1</span></p>
+    <table>
+        <thead>
+            <tr>
+                <th data-column="nom">Nom en français</th>
+                <th data-column="population">Population</th>
+                <th data-column="superficie">Surface</th>
+                <th data-column="getPopDensity">Densité de population</th>
+                <th data-column="continent">Continent d’appartenance</th>
+                <th data-column="drapeau">Drapeau</th>
+            </tr>
+        </thead>
+        <tbody id="country-list"></tbody>
+    </table>
+    <div id="pagination">
+        <button id="prev-button">PRÉC</button>
+        <button id="next-button">SUIV</button>
+    </div>
+</body>
+
 
 <script src="../jquery-3.7.1.min.js"></script>
 <script src="./script_v5.js"></script>
@@ -50,3 +63,4 @@
 
 
 </script>
+

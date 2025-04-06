@@ -5,20 +5,6 @@
 <script type="text/javascript" src="../data/class_countries.js"></script>
 
 </script>
-<table>
-    <thead>
-        <tr>
-            <th>Nom en français</th>
-            <th>Population</th>
-            <th>Surface</th>
-            <th>Densité de population</th>
-            <th>Continent d’appartenance</th>
-            <th>Drapeau</th>
-        </tr>
-    </thead>
-
-</table>
-
 <style>
     table {
         width: 100%;
@@ -34,15 +20,37 @@
     th {
         background-color: #f2f2f2;
     }
-
-
-
-
     img {
         width: 100px;
         height: auto;
     }
+    #pagination {
+            margin-top: 20px;
+            text-align: center;
+    }
 </style>
+<body>
+    <h1>Liste des Pays</h1>
+    <p>Page: <span id="page-number">1</span></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom en français</th>
+                <th>Population</th>
+                <th>Surface</th>
+                <th>Densité de population</th>
+                <th>Continent d’appartenance</th>
+                <th>Drapeau</th>
+            </tr>
+        </thead>
+        <tbody id="country-list"></tbody>
+    </table>
+    <div id="pagination">
+        <button id="prev-button">PRÉC</button>
+        <button id="next-button">SUIV</button>
+    </div>
+</body>
+
 
 <script src="../jquery-3.7.1.min.js"></script>
 <script src="./script_v4.js"></script>
@@ -50,3 +58,4 @@
 
 
 </script>
+
